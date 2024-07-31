@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Java Banters</title>
+</head>
+<body>
+
+<h2>Java Banters Home Page!!</h2>
+<hr>
+<p>
+Welcome to Java Banters. This is a community of Java developers who love to share their knowledge and experience with others. We have a collection of articles, tutorials, and code examples that will help you learn Java programming language. Whether you are a beginner or an experienced developer, you will find something useful here. So, start exploring and have fun learning Java!
+</p>
+<hr>
+<!-- Display user name and role -->
+<p>
+    Logged in as: <span th:text="${#authentication.principal.username}"></span>
+    <br>
+    Role(s): <span th:text="${#authentication.principal.authorities}"></span>
+<!--    User : <span sec:authentication="principal.username"></span>-->
+<!--    <br><br>-->
+<!--    Role(s): <span sec:authentication="principal.authorities"></span>-->
+</p>
+
+<hr>
+<!-- Add a link to the /leaders page for managers-->
+<div sec:authorize="hasRole('MANAGER')">
+    <p>
+        <a th:href="@{/leaders}">Click here to see a list of Java Banters Leaders</a>
+        (Only for Managers)
+    </p>
+</div>
+<!-- Add a link to the /systems page for admins-->
+<hr>
+
+<div sec:authorize="hasRole('ADMIN')">
+    <p>
+        <a th:href="@{/systems}">Click here to see a list of Java Banters Systems</a>
+        (Only for Admins)
+    </p>
+</div>
+<!--Add a logout button -->
+<form action="#" th:action="@{/logout}" method="post">
+    <input type="submit" value="Logout"/>
+</form>
+</body>
+</html>
